@@ -191,48 +191,7 @@
                     </div>
                     <!-- .order-notes -->
                 </div>
-                <div class="thank-you">
-                    <section>
-                        <h2>Ευχαριστούμε για την παραγγελία σας!</h2>
-                        <p>
-                            Η παραγγελία σας με κωδικό <span id='orderid'>54343</span> ειναι εδώ!
-                        </p>
-                        <p>
-                            Με εκτίμηση,<br> η ομάδα του <span id="shop">Homeone</span>
-                        </p>
 
-                    </section>
-                    <hr>
-                    <section>
-                        <h2>Φόρμα Επιστροφής</h2>
-                        <br>
-                        <p>Αριθμός Παραγγελίας: <span id='orderid-form'>54343</span> </p>
-                        <p>Προϊοντα Επιστροφής: ____________________________________________________________ </p>
-                        <p>Ονοματεπώνυμο: ____________________________________________________________ </p>
-                        <p>Ημερομηνία Επιστροφής: ____________________________________________________________ </p>
-                        <p>Ημερομηνία Παραγγελίας: ____________________________________________________________ </p>
-
-                        <p>Αιτία Επιστροφής: </p>
-
-                        <form>
-                            <input type="checkbox" name="option1" value="Bike">
-                            <label for="option1">Δεν Ικανοποιεί Τις Απαιτήσεις Μου</label><br>
-                            <input type="checkbox" name="option2" value="Car">
-                            <label for="option2">Λανθασμένη Παραγγελία</label><br>
-                            <input type="checkbox" name="option3" value="Boat">
-                            <label for="option3">Ελαττωματικό Προϊόν</label><br>
-                            <input type="checkbox" name="option4" value="Boat">
-                            <label for="option4">Λανθασμένο Προϊόν</label><br>
-                            <input type="checkbox" name="option6" value="Boat">
-                            <label for="option6">Άλλο</label><br>
-                        </form>
-                    </section>
-
-
-
-
-
-                </div>
             </article>
             <!-- .content -->
 
@@ -270,7 +229,7 @@
         function main() {
             let data = decipherData();
             populateData(data);
-
+            window.print();
             console.log(data);
             // let b = populate();
             // if (b > 0) {
@@ -334,19 +293,14 @@
                 let temp = createProductRow(product.name, product.sku, product.price, product.quantity);
                 document.querySelector('#products_here').appendChild(temp);
             });
-            document.querySelector('#order_total').innerText = data.total;
-            document.querySelector('#order_subtotal').innerText = data.subtotal;
-            document.querySelector('#order_shipping').innerText = data.shipping;
-            document.querySelector('#order_extra').innerText = data.extra;
+            document.querySelector('#order_total').innerText = data.total + ' €';
+            document.querySelector('#order_subtotal').innerText = data.subtotal + ' €';
+            document.querySelector('#order_shipping').innerText = data.shipping + ' €';
+            document.querySelector('#order_extra').innerText = data.extra + ' €';
             if (data.comment != '') {
                 document.querySelector('#order_comment').innerText = data.comment;
                 document.querySelector('#comment_div').style.display = 'block';
             }
-
-
-
-
-
 
 
         }
