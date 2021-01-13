@@ -61,6 +61,17 @@
             box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
         }
         
+        .myrow {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        
+        .myblock {
+            width: 100px;
+        }
+        
         @media print {
             #navigation {
                 display: none;
@@ -82,24 +93,32 @@
         <div id="page">
             <article class="content">
                 <div class="order-invoice">
-                    <div class="order-branding">
-                        <div class="company-logo">
-                            <img id='shopLogo' src="0" width="128" height="128" alt="Homeone.gr">
+                    <div class="myrow">
+                        <div class="myblock">
+                            <div class="order-branding">
+                                <div class="company-logo">
+                                    <img id='shopLogo' src="0" width="128" height="128" alt="Homeone.gr">
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="order-addresses no-shipping-address">
-                        <div class="billing-address">
-                            <h3>Διεύθυνση</h3>
-                            <address>
+                        <div class="myblock">
+                            <div class="order-addresses no-shipping-address">
+                                <div class="billing-address">
+                                    <h3>Διεύθυνση</h3>
+                                    <address>
                                 <span id="client_name"></span><br>
                                 <span id="client_address"></span><br>
                                 <span id="client_perioxi"></span><br>
                                 <span id="client_perifereia"></span><br>
                                 <span id="client_zip"></span><br>
 			                </address>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+
+
                     <!-- .order-addresses -->
 
 
