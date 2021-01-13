@@ -306,6 +306,9 @@
             document.querySelector('#client_perioxi').innerText = data.client.perioxi;
             document.querySelector('#client_perifereia').innerText = data.client.perifereia;
             document.querySelector('#client_zip').innerText = data.client.zip;
+            Array.from(document.querySelectorAll('.order_id')).forEach(function(el) {
+                el.innerText = data.orderid;
+            })
 
 
         }
