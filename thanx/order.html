@@ -61,6 +61,12 @@
             box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
         }
 
+        .centeredd {
+            margin: auto;
+            width: 50%;
+
+        }
+
         @media print {
             #navigation {
                 display: none;
@@ -200,7 +206,10 @@
                         <h4>Σχόλιο πελάτη</h4>
                         <p id="order_comment"></p>
                     </div>
-                    <div id="qr-container"></div>
+                    <div class="centeredd" id="qrcode">
+
+
+                    </div>
                     <!-- .order-notes -->
                 </div>
 
@@ -220,7 +229,7 @@
     <!-- #container -->
 
 
-
+    <script src="qrcodejs/qrcode.min.js"></script>
     <script>
         function logoPicker(shop) {
             if (shop == 'homeone') {
@@ -313,6 +322,8 @@
                 document.querySelector('#order_comment').innerText = data.comment;
                 document.querySelector('#comment_div').style.display = 'block';
             }
+            let qrvalues = 'sh=' + data.shop + "&id=" + data.orderid;
+            new QRCode(document.getElementById("qrcode"), qrvalues);
 
 
         }
