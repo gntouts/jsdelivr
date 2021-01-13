@@ -267,6 +267,8 @@
             populateData(data);
             // window.print();
             console.log(data);
+            let b = calculateDistance('#last');
+            console.log(b);
             // let b = populate();
             // if (b > 0) {
             //     printIt();
@@ -364,6 +366,17 @@
             } else {
                 return 0
             }
+        }
+        function calculateDistance(query) {
+            var elem = document.querySelector('query');
+            var distance = 0;
+            do {
+                distance += elem.offsetTop;
+                elem = elem.offsetParent;
+
+            } while (elem);
+            distance = distance < 0 ? 0 : distance;
+            return distance
         }
 
         function docReady(fn) {
