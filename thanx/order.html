@@ -113,11 +113,11 @@
                             </li>
                             <li>
                                 <strong>Order Date</strong>
-                                <span>13 Ιανουαρίου 2021</span>
+                                <span id="order_date"></span>
                             </li>
                             <li>
                                 <strong>Payment Method</strong>
-                                <span><span id="payment_method" class="wc_payment_method-title">Αντικαταβολή</span></span>
+                                <span><span id="payment_method" class="wc_payment_method-title"></span></span>
                             </li>
                             <li>
                                 <strong>Email</strong>
@@ -125,7 +125,7 @@
                             </li>
                             <li>
                                 <strong>Telephone</strong>
-                                <span id="client_email">6949693319</span>
+                                <span id="client_phone">6949693319</span>
                             </li>
                         </ul>
 
@@ -309,6 +309,13 @@
             Array.from(document.querySelectorAll('.order_id')).forEach(function(el) {
                 el.innerText = data.orderid;
             })
+            document.querySelector('#client_phone').innerText = data.client.phone;
+            document.querySelector('#client_email').innerText = data.client.email;
+            document.querySelector('#payment_method').innerText = data.payment;
+            document.querySelector('#order_date').innerText = data.date;
+
+
+
 
 
         }
