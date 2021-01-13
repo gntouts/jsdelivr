@@ -288,17 +288,26 @@
         }
 
         function main() {
-            let data = window.location.href;
-            data = data.split('?')[1];
-            data = decodeURI(data);
-            data = JSON.parse(data);
-            let logo = logoPicker(data.shop)
-            document.querySelector('#shopLogo').src = logo + '?v2';
+            let data = decipherData();
+            populateData(data);
+
             console.log(data);
             // let b = populate();
             // if (b > 0) {
             //     printIt();
             // }
+        }
+
+        function populateData(data) {
+            let logo = logoPicker(data.shop)
+            document.querySelector('#shopLogo').src = logo + '?v2';
+            document.querySelector('#client_name').innerText = data.client.name;
+            document.querySelector('#client_address').innerText = data.client.address;
+            document.querySelector('#client_perioxi').innerText = data.client.perioxi;
+            document.querySelector('#client_perifereia').innerText = data.client.perifereia;
+            document.querySelector('#client_zip').innerText = data.client.zip;
+
+
         }
 
         function printIt() {
