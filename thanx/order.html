@@ -152,7 +152,15 @@
                                     <td class="total-name"><span>Υποσύνολο</span></td>
                                     <td class="total-item-price"></td>
                                     <td class="total-quantity"></td>
-                                    <td class="total-price"><span><span class="woocommerce-Price-amount amount">54.84&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>
+                                    <td class="total-price"><span><span id="order_subtotal" class="woocommerce-Price-amount amount">54.84&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="total-name"><span>Χρέωση Αντικαταβολής</span></td>
+                                    <td class="total-item-price"></td>
+                                    <td class="total-quantity"></td>
+                                    <td class="total-price"><span><span id="order_extra" class="woocommerce-Price-amount amount">54.84&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>
                                         </span>
                                     </td>
                                 </tr>
@@ -160,14 +168,14 @@
                                     <td class="total-name"><span>Αποστολή</span></td>
                                     <td class="total-item-price"></td>
                                     <td class="total-quantity"></td>
-                                    <td class="total-price"><span><span class="woocommerce-Price-amount amount">7.00&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>&nbsp;<small class="shipped_via">μέσω Μεταφορικά</small></span>
+                                    <td class="total-price"><span><span id="order_shipping" class="woocommerce-Price-amount amount">7.00&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>&nbsp;<small class="shipped_via">μέσω Μεταφορικά</small></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="total-name"><span>Σύνολο</span></td>
                                     <td class="total-item-price"></td>
                                     <td class="total-quantity"></td>
-                                    <td class="total-price"><span><span class="woocommerce-Price-amount amount">61.84&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>
+                                    <td class="total-price"><span><span id="order_total" class="woocommerce-Price-amount amount">61.84&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>
                                         </span>
                                     </td>
                                 </tr>
@@ -274,7 +282,7 @@
         function createProductRow(name, sku, price, quantity) {
             let row = document.createElement('tr');
             let total = parseFloat(price) * parseFloat(quantity);
-
+            total = total.toFixed(2);
             let inner = ` <td class="product-name">
                                         <span class="name">
 								PROD_NAME									</span>
@@ -306,12 +314,6 @@
             inner = inner.replace('PROD_TOTAL', total.toString());
             row.innerHTML = inner;
             return row
-
-
-
-
-
-
         }
 
         function populateData(data) {
@@ -332,7 +334,11 @@
             Array.from(data.products).forEach(function(product) {
                 let temp = createProductRow(product.name, product.sku, product.price, product.quantity);
                 document.querySelector('#products_here').appendChild(temp);
-            })
+            });
+            document.querySelector('#order_total').innerText = data.total;
+            document.querySelector('#order_subtotal').innerText = data.subtotal;
+            document.querySelector('#order_shipping').innerText = data.shipping;
+            document.querySelector('#order_extra').innerText = data.extra;
 
 
 
