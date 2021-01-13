@@ -185,10 +185,9 @@
                     </div>
                     <!-- .order-items -->
 
-                    <div class="order-notes">
-                        <h4>Customer Note</h4>
-                        <p>Παρακαλώ στείλτε αριθμό σποστολης στο κινητο</p>
-
+                    <div id='comment_div' style="display: none;" class="order-notes">
+                        <h4>Σχόλιο πελάτη</h4>
+                        <p id="order_comment">Παρακαλώ στείλτε αριθμό σποστολης στο κινητο</p>
                     </div>
                     <!-- .order-notes -->
                 </div>
@@ -339,6 +338,11 @@
             document.querySelector('#order_subtotal').innerText = data.subtotal;
             document.querySelector('#order_shipping').innerText = data.shipping;
             document.querySelector('#order_extra').innerText = data.extra;
+            if (data.comment != '') {
+                document.querySelector('#order_comment').innerText = data.comment;
+                document.querySelector('#comment_div').style.display = 'block';
+            }
+
 
 
 
