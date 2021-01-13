@@ -144,34 +144,7 @@
                                 </tr>
                             </thead>
 
-                            <tbody>
-
-                                <tr>
-                                    <td class="product-name">
-                                        <span class="name">
-								Σετ Ελαστικά Καλύμματα Καναπέ - Σαλονιού 3 Τεμαχίων Linen SH-0550 Μόκα									</span>
-
-                                        <br>
-                                        <dl class="extras">
-
-
-                                            <dt>SKU:</dt>
-                                            <dd>SH-0550</dd>
-
-                                        </dl>
-                                    </td>
-                                    <td class="product-item-price">
-                                        <span><span class="woocommerce-Price-amount amount">39.90&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>
-                                        </span>
-                                    </td>
-                                    <td class="product-quantity">
-                                        <span>1</span>
-                                    </td>
-                                    <td class="product-price">
-                                        <span><span class="woocommerce-Price-amount amount">39.90&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>
-                                        </span>
-                                    </td>
-                                </tr>
+                            <tbody id="products_here">
                             </tbody>
 
                             <tfoot>
@@ -298,6 +271,49 @@
             // }
         }
 
+        function createProductRow(name, sku, price, quantity) {
+            let row = document.createElement('tr');
+            let total = parseFloat(price) * parseFloat(quantity);
+
+            let inner = ` <td class="product-name">
+                                        <span class="name">
+								PROD_NAME									</span>
+
+                                        <br>
+                                        <dl class="extras">
+
+
+                                            <dt>SKU:</dt>
+                                            <dd>PROD_SKU</dd>
+
+                                        </dl>
+                                    </td>
+                                    <td class="product-item-price">
+                                        <span><span class="woocommerce-Price-amount amount">PROD_PRICE&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>
+                                        </span>
+                                    </td>
+                                    <td class="product-quantity">
+                                        <span>PROD_QUANTITY</span>
+                                    </td>
+                                    <td class="product-price">
+                                        <span><span class="woocommerce-Price-amount amount">PROD_TOTAL&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>
+                                        </span>
+                                    </td>`;
+            inner = inner.replace('PROD_NAME', name);
+            inner = inner.replace('PROD_SKU', sku.toString());
+            inner = inner.replace('PROD_PRICE', price.toString());
+            inner = inner.replace('PROD_QUANTITY', quantity.toString());
+            inner = inner.replace('PROD_TOTAL', total.toString());
+            row.innerHTML = inner;
+            return row
+
+
+
+
+
+
+        }
+
         function populateData(data) {
             let logo = logoPicker(data.shop)
             document.querySelector('#shopLogo').src = logo + '?v2';
@@ -313,6 +329,11 @@
             document.querySelector('#client_email').innerText = data.client.email;
             document.querySelector('#payment_method').innerText = data.payment;
             document.querySelector('#order_date').innerText = data.date;
+            Array.from(data.products).forEach(function(product) {
+                let temp = createProductRow(product.name, product.sku, product.price, product.quantity);
+                document.querySelector('#products_here').appendChild(temp);
+            })
+
 
 
 
