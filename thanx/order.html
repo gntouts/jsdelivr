@@ -80,25 +80,13 @@
         <!-- #navigation -->
 
         <div id="page">
-
-
-
-
-
             <article class="content">
-
-                <div class="orderForma">
+                <div class="order-invoice">
                     <div class="order-branding">
                         <div class="company-logo">
-                            <img src="https://homeone.gr/wp-content/uploads/sites/8/2020/05/homeoneSquare.png" width="128" height="128" alt="Homeone.gr">
+                            <img id='shopLogo' src="0" width="128" height="128" alt="Homeone.gr">
                         </div>
-
-                        <div class="company-info">
-                            <div class="company-address"></div>
-                        </div>
-
                     </div>
-                    <!-- .order-branding -->
 
                     <div class="order-addresses 
 			no-shipping-address">
@@ -334,11 +322,29 @@
 
 
     <script>
+        function logoPicker(shop) {
+            if (shop == 'homeone') {
+                return 'https://homeone.gr/wp-content/uploads/sites/8/2020/05/homeoneSquare.png'
+            } else if (shop == 'familystore') {
+                return 'https://familystore.gr/wp-content/uploads/2019/09/family-store-logo.jpg'
+            } else if (shop == 'kidstoys') {
+                return 'https://kidstoys.gr/wp-content/uploads/sites/7/2020/06/logokidstoys1print.jpg'
+            }
+        }
+
+        function decipherData() {
+            let data = window.location.href.split('?')[1];
+            data = JSON.parse(decodeURI(data));
+            return data
+        }
+
         function main() {
             let data = window.location.href;
             data = data.split('?')[1];
             data = decodeURI(data);
             data = JSON.parse(data);
+            let logo = logoPicker(data.shop)
+            document.querySelector('#shopLogo').src = logo + '?v2';
             console.log(data);
             // let b = populate();
             // if (b > 0) {
