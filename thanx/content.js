@@ -1,16 +1,3 @@
-// var printButton = document.querySelector('.print-actions');
-// if (printButton != null) {
-//     printButton = document.querySelector('a');
-// }
-// console.log(printButton);
-
-// document.querySelector('.print-actions').querySelector('a').href = '#';
-
-// document.querySelector('.print-actions').querySelector('a').addEventListener('click', function(event) {
-//     event.preventDefault();
-//     console.log('Clicked');
-// })
-
 class WooProduct {
     constructor(name, sku, price, quantity) {
         this.name = name;
@@ -80,7 +67,7 @@ function getShop() {
 function getClient() {
     let container = Array.from(document.querySelector('div.order_data_column_container').querySelectorAll('div.order_data_column'));
     let billingAddress;
-    container.forEach(function(el) {
+    container.forEach(function (el) {
         let h3 = el.querySelector('h3');
         if (h3.innerText.includes('Χρέωση')) {
             billingAddress = el;
@@ -100,7 +87,6 @@ function formatDate(date) {
     temp = date.split('-');
     let month = parseInt(temp[1]);
     month = months[month];
-    console.log(month);
     temp = temp[2] + ' ' + month + ' ' + temp[0];
     return temp;
 }
@@ -108,14 +94,12 @@ function formatDate(date) {
 function getProducts() {
     let container = Array.from(document.querySelector('#order_line_items').querySelectorAll('tr.item'))
     let products = [];
-    container.forEach(function(pRow) {
+    container.forEach(function (pRow) {
         let name = pRow.querySelector('a.wc-order-item-name').innerText;
         let sku = pRow.querySelector('div.wc-order-item-sku').innerText;
         let price = pRow.querySelector('td.item_cost').getAttribute('data-sort-value').trim();
         let quantity = pRow.querySelector('td.quantity div.view').innerText.trim();
         quantity = extractNum(quantity);
-        // quantity = quantity.match(/\d/g);
-        // quantity = quantity.join('');
         let temp = new WooProduct(name, sku, price, quantity);
         products.push(temp)
     })
@@ -125,11 +109,8 @@ function getProducts() {
 function extractOrderData() {
     let shop = getShop();
     let orderid = window.location.href.split('post=')[1].split('&')[0];
-    console.log(shop);
     let client = getClient();
-    console.log(client);
     let products = getProducts();
-    console.log(products);
     let shipping = document.querySelector('#order_shipping_line_items td.line_cost').innerText.replace('€', '').trim();
     let date = document.querySelector('.date-picker.hasDatepicker').getAttribute('value').trim();
     date = formatDate(date);
@@ -149,10 +130,8 @@ function extractOrderData() {
     }
     let total = document.querySelectorAll('table.wc-order-totals tr');
     let trueTotal = 0;
-    console.log(total);
     total = Array.from(total);
-    total.forEach(function(pRow) {
-        console.log(pRow)
+    total.forEach(function (pRow) {
         if (pRow.querySelector('td.label').innerText.includes('Σύνολο')) {
             trueTotal = pRow.querySelector('td.total').innerText.replace('€', '').trim();
         }
@@ -161,7 +140,6 @@ function extractOrderData() {
 
 
     let order = new WooOrder(client, orderid, date, products, shipping, payment, extra, trueTotal, comment, shop);
-    console.log(order);
     return order
 
 }
@@ -196,13 +174,16 @@ if (b) {
     if (printButton != null) {
         printButton = printButton.querySelector('a');
     }
-    printButton.href = '#';
-    printButton.addEventListener('click', function(event) {
+    customButton = document.createElement('a');
+    customButton.classList = ['button print-preview-button invoice'];
+    customButton.setAttribute("target", '_blank');
+    customButton.innerText = 'Ntouts Invoice';
+    document.querySelector('.print-actions').appendChild(customButton);
+    customButton.addEventListener('click', function (event) {
         event.preventDefault();
         let data = extractOrderData();
         let url = stringify(data);
-        printButton.href = '#';
+        customButton.setAttribute("href", url);
         window.open(url, '_blank');
-        printButton.href = '#';
     })
 }
