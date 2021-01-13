@@ -283,7 +283,7 @@
             document.querySelector('#client_perifereia').innerText = data.client.perifereia;
             document.querySelector('#client_zip').innerText = data.client.zip;
             Array.from(document.querySelectorAll('.order_id')).forEach(function(el) {
-                el.innerText = data.orderid;
+                el.innerText = '#' + data.orderid;
             })
             document.querySelector('#client_phone').innerText = data.client.phone;
             document.querySelector('#client_email').innerText = data.client.email;
