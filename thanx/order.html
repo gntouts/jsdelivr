@@ -214,19 +214,12 @@
                         <p id="order_comment"></p>
                     </div>
                     <div class="centeredd" id="qrcode">
-
-
                     </div>
+                    <div id="invoice_end"></div>
                     <!-- .order-notes -->
                 </div>
                 <div id="thanks">
                     <p>Thank U</p>
-                    <p>Thank U</p>
-                    <p>Thank U</p>
-                    <p>Thank U</p>
-                    <p>Thank U</p>
-                    <p id="prelast">Thank U</p>
-                    <p id="last">Thank U</p>
                 </div>
             </article>
             <!-- .content -->
@@ -267,8 +260,13 @@
             populateData(data);
             // window.print();
             console.log(data);
-            let b = calculateDistance('#last');
+            let b = calculateDistance('#invoice_end');
             console.log(b);
+            b = 1393 - b;
+            console.log(b);
+            b = b.toString() + 'px';
+            console.log(b);
+            document.querySelector('#thanks').style.paddingTop = b;
             // let b = populate();
             // if (b > 0) {
             //     printIt();
