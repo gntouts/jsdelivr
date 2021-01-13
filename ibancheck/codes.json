@@ -1,0 +1,17 @@
+{
+    "Banks": [
+        { "name": "BANK OF GREECE", "code": "010" },
+
+
+        { "name": "NATIONAL BANK OF GREECE S.A.", "code": "011" },
+        { "name": "EMPORIKI BANK OF GREECE S.A.", "code": "012" },
+        { "name": "ALPHA BANK", "code": "014" },
+        { "name": "GENERAL BANK OF GREECE SA", "code": "015" },
+        { "name": "ATTICA BANK S.A.", "code": "016" },
+        { "name": "PIRAEUS BANK S.A.", "code": "017" },
+        { "name": "EFG EUROBANK ERGASIAS S.A.", "code": "026" },
+        { "name": "MARFIN EGNATIA BANK S.A.", "code": "028" }
+    ]
+}
+
+"https://www.ibanvalidator.com/en/support/country/GR.html"

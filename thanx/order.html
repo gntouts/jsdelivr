@@ -1,176 +1,383 @@
-// var printButton = document.querySelector('.print-actions');
-// if (printButton != null) {
-//     printButton = document.querySelector('a');
-// }
-// console.log(printButton);
+<html>
 
-// document.querySelector('.print-actions').querySelector('a').href = '#';
+<head>
+    <meta charset="utf-8">
+    <title>Invoice</title>
 
-// document.querySelector('.print-actions').querySelector('a').addEventListener('click', function(event) {
-//     event.preventDefault();
-//     console.log('Clicked');
-// })
-
-class WooProduct {
-    constructor(name, sku, price, quantity) {
-        this.name = name;
-        this.sku = sku;
-        this.price = price;
-        this.quantity = quantity;
-    }
-}
-
-class WooClient {
-    constructor(name, address, phone, perioxi, zip, email) {
-        this.name = name;
-        this.address = address;
-        this.perioxi = perioxi;
-        this.zip = zip;
-        this.phone = phone;
-        this.email = email;
-    }
-}
-
-class WooOrder {
-    constructor(client, products, shipping, payment, extra, total, comment, shop) {
-        this.client = client;
-        this.products = products;
-        this.shipping = shipping;
-        this.subtotal = (parseFloat(total) - parseFloat(shipping)).toString();
-        this.total = total;
-        this.comment = comment;
-        this.shop = shop;
-        this.payment = payment;
-        this.extra = extra;
-    }
-}
-
-function extractNum(str) {
-    let temp = str.trim();
-    temp = temp.match(/\d/g);
-    temp = temp.join('');
-    return temp
-}
-
-function getShop() {
-    let shop = window.location.href;
-    if (shop.includes('familystore')) {
-        return 'familystore';
-    } else if (shop.includes('kidstoys')) {
-        return 'kidstoys';
-    } else if (shop.includes('homeone')) {
-        return 'homeone';
-    } else {
-        return null;
-    }
-}
-
-function getClient() {
-    let container = Array.from(document.querySelector('div.order_data_column_container').querySelectorAll('div.order_data_column'));
-    let billingAddress;
-    container.forEach(function(el) {
-        let h3 = el.querySelector('h3');
-        if (h3.innerText.includes('Χρέωση')) {
-            billingAddress = el;
+    <style>
+        #navigation {
+            font-family: sans-serif;
+            background-color: #f1f1f1;
+            z-index: 200;
+            border-bottom: 1px solid #dfdfdf;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            position: fixed;
+            padding: 6px 8px;
+            text-align: right;
         }
-    })
-    let data = billingAddress.querySelectorAll('div.address p');
-    let someData = data[0].innerHTML.toString().split('<br>');
-    let email = data[1].querySelector('a').innerText;
-    let phone = data[2].querySelector('a').innerText;
-    let client = new WooClient(someData[0], someData[1], phone, someData[2], someData[3], email)
-    return client
-}
+        
+        #navigation .button {
+            transition-property: border, background, color;
+            display: inline-block;
+            font-size: 13px;
+            line-height: 26px;
+            height: 28px;
+            margin: 0;
+            padding: 0 10px 1px;
+            cursor: pointer;
+            border-width: 1px;
+            border-style: solid;
+            -webkit-border-radius: 3px;
+            -webkit-appearance: none;
+            border-radius: 3px;
+            white-space: nowrap;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            background: #2ea2cc;
+            border-color: #0074a2;
+            -webkit-box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.5), 0 1px 0 rgba(0, 0, 0, .15);
+            box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.5), 0 1px 0 rgba(0, 0, 0, .15);
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        #navigation .button:hover,
+        #navigation .button:focus {
+            background: #1e8cbe;
+            border-color: #0074a2;
+            -webkit-box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.6);
+            box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.6);
+            color: #fff;
+        }
+        
+        #navigation .button:active {
+            background: #1b7aa6;
+            border-color: #005684;
+            color: rgba(255, 255, 255, 0.95);
+            -webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
+            box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        @media print {
+            #navigation {
+                display: none;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://homeone.gr/wp-content/plugins/woocommerce-delivery-notes/templates/print-order/style.css" type="text/css" media="screen,print">
+</head>
 
-function getProducts() {
-    let container = Array.from(document.querySelector('#order_line_items').querySelectorAll('tr.item'))
-    let products = [];
-    container.forEach(function(pRow) {
-        let name = pRow.querySelector('a.wc-order-item-name').innerText;
-        let sku = pRow.querySelector('div.wc-order-item-sku').innerText;
-        let price = pRow.querySelector('td.item_cost').getAttribute('data-sort-value').trim();
-        let quantity = pRow.querySelector('td.quantity div.view').innerText.trim();
-        quantity = extractNum(quantity);
-        // quantity = quantity.match(/\d/g);
-        // quantity = quantity.join('');
-        let temp = new WooProduct(name, sku, price, quantity);
-        products.push(temp)
-    })
-    return products;
-}
+<body class="invoice">
 
-function extractOrderData() {
-    let shop = getShop();
-    console.log(shop);
-    let client = getClient();
-    console.log(client);
-    let products = getProducts();
-    console.log(products);
-    let shipping = document.querySelector('#order_shipping_line_items td.line_cost').innerText.replace('€', '').trim();
-    let extra = '0';
-    try {
-        extra = document.querySelector('#order_fee_line_items td.line_cost').innerText.replace('€', '').trim();
-    } catch (error) {
-        extra = '0';
-    }
-    let payment = document.querySelector('p.woocommerce-order-data__meta.order_number').innerText.split('.')[0];
-    let comment = document.querySelector('div.order_data_column_container p.order_note').innerText.replace('Σημείωμα από τον πελάτη:', '');
-    let total = document.querySelectorAll('table.wc-order-totals tr');
-    let trueTotal = 0;
-    console.log(total);
-    total = Array.from(total);
-    total.forEach(function(pRow) {
-        console.log(pRow)
-        if (pRow.querySelector('td.label').innerText.includes('Σύνολο')) {
-            trueTotal = pRow.querySelector('td.total').innerText.replace('€', '').trim();
+    <div id="container">
+
+        <div id="navigation">
+            <a href="#" class="button" onclick="window.print();return false;">Print</a>
+        </div>
+        <!-- #navigation -->
+
+        <div id="page">
+
+
+
+
+
+            <article class="content">
+
+                <div class="orderForma">
+                    <div class="order-branding">
+                        <div class="company-logo">
+                            <img src="https://homeone.gr/wp-content/uploads/sites/8/2020/05/homeoneSquare.png" width="128" height="128" alt="Homeone.gr">
+                        </div>
+
+                        <div class="company-info">
+                            <div class="company-address"></div>
+                        </div>
+
+                    </div>
+                    <!-- .order-branding -->
+
+                    <div class="order-addresses 
+			no-shipping-address">
+                        <div class="billing-address">
+                            <h3>Billing Address</h3>
+                            <address>
+
+				Ειρηνη Βερωνη<br>Μυκονος<br>Μυκονος<br>Νότιο Αιγαίο<br>84600
+			</address>
+                        </div>
+
+                        <div class="shipping-address">
+                            <h3>Shipping Address</h3>
+                            <address>
+
+				Ειρηνη Βερωνη<br>Μυκονος<br>Μυκονος<br>Νότιο Αιγαίο<br>84600
+			</address>
+                        </div>
+
+                    </div>
+                    <!-- .order-addresses -->
+
+
+                    <div class="order-info">
+                        <h2 style="font-size: 3.5em;">Invoice <span>#59209</span></h2>
+
+                        <ul class="info-list">
+                            <li>
+                                <strong>Order Number</strong>
+                                <span>59209</span>
+                            </li>
+                            <li>
+                                <strong>Order Date</strong>
+                                <span>13 Ιανουαρίου 2021</span>
+                            </li>
+                            <li>
+                                <strong>Payment Method</strong>
+                                <span><span class="wc_payment_method-title">Αντικαταβολή</span></span>
+                            </li>
+                            <li>
+                                <strong>Email</strong>
+                                <span>riam5461@gmail.com</span>
+                            </li>
+                            <li>
+                                <strong>Telephone</strong>
+                                <span>6949693319</span>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <!-- .order-info -->
+
+
+                    <div class="order-items">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="head-name"><span>Product</span></th>
+                                    <th class="head-item-price"><span>Price</span></th>
+                                    <th class="head-quantity"><span>Quantity</span></th>
+                                    <th class="head-price"><span>Total</span></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td class="product-name">
+                                        <span class="name">
+								Σετ Ελαστικά Καλύμματα Καναπέ - Σαλονιού 3 Τεμαχίων Linen SH-0550 Μόκα									</span>
+
+                                        <br>
+                                        <dl class="extras">
+
+
+                                            <dt>SKU:</dt>
+                                            <dd>SH-0550</dd>
+
+                                        </dl>
+                                    </td>
+                                    <td class="product-item-price">
+                                        <span><span class="woocommerce-Price-amount amount">39.90&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>
+                                        </span>
+                                    </td>
+                                    <td class="product-quantity">
+                                        <span>1</span>
+                                    </td>
+                                    <td class="product-price">
+                                        <span><span class="woocommerce-Price-amount amount">39.90&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="product-name">
+                                        <span class="name">
+								Ελαστικό Κάλυμμα Με Πλάτη Χωρίς Βολάν Linen SH-0548 Μόκα									</span>
+
+                                        <br>
+                                        <dl class="extras">
+
+
+                                            <dt>SKU:</dt>
+                                            <dd>SH-0548</dd>
+
+                                        </dl>
+                                    </td>
+                                    <td class="product-item-price">
+                                        <span><span class="woocommerce-Price-amount amount">2.49&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>
+                                        </span>
+                                    </td>
+                                    <td class="product-quantity">
+                                        <span>6</span>
+                                    </td>
+                                    <td class="product-price">
+                                        <span><span class="woocommerce-Price-amount amount">14.94&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <td class="total-name"><span>Υποσύνολο</span></td>
+                                    <td class="total-item-price"></td>
+                                    <td class="total-quantity"></td>
+                                    <td class="total-price"><span><span class="woocommerce-Price-amount amount">54.84&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="total-name"><span>Αποστολή</span></td>
+                                    <td class="total-item-price"></td>
+                                    <td class="total-quantity"></td>
+                                    <td class="total-price"><span><span class="woocommerce-Price-amount amount">7.00&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>&nbsp;<small class="shipped_via">μέσω Μεταφορικά</small></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="total-name"><span>Σύνολο</span></td>
+                                    <td class="total-item-price"></td>
+                                    <td class="total-quantity"></td>
+                                    <td class="total-price"><span><span class="woocommerce-Price-amount amount">61.84&nbsp;<span class="woocommerce-Price-currencySymbol">€</span></span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                    <!-- .order-items -->
+
+                    <div class="order-notes">
+                        <h4>Customer Note</h4>
+                        <p>Παρακαλώ στείλτε αριθμό σποστολης στο κινητο</p>
+
+                    </div>
+                    <!-- .order-notes -->
+
+                    <div class="order-thanks">
+
+                    </div>
+                    <!-- .order-thanks -->
+
+                    <div class="order-colophon">
+                        <div class="colophon-policies">
+                        </div>
+
+                        <div class="colophon-imprint">
+                        </div>
+
+                    </div>
+                    <!-- .order-colophon -->
+
+
+                </div>
+                <div class="thank-you">
+                    <section>
+                        <h2>Ευχαριστούμε για την παραγγελία σας!</h2>
+                        <p>
+                            Η παραγγελία σας με κωδικό <span id='orderid'>54343</span> ειναι εδώ!
+                        </p>
+                        <p>
+                            Με εκτίμηση,<br> η ομάδα του <span id="shop">Homeone</span>
+                        </p>
+
+                    </section>
+                    <hr>
+                    <section>
+                        <h2>Φόρμα Επιστροφής</h2>
+                        <br>
+                        <p>Αριθμός Παραγγελίας: <span id='orderid-form'>54343</span> </p>
+                        <p>Προϊοντα Επιστροφής: ____________________________________________________________ </p>
+                        <p>Ονοματεπώνυμο: ____________________________________________________________ </p>
+                        <p>Ημερομηνία Επιστροφής: ____________________________________________________________ </p>
+                        <p>Ημερομηνία Παραγγελίας: ____________________________________________________________ </p>
+
+                        <p>Αιτία Επιστροφής: </p>
+
+                        <form>
+                            <input type="checkbox" name="option1" value="Bike">
+                            <label for="option1">Δεν Ικανοποιεί Τις Απαιτήσεις Μου</label><br>
+                            <input type="checkbox" name="option2" value="Car">
+                            <label for="option2">Λανθασμένη Παραγγελία</label><br>
+                            <input type="checkbox" name="option3" value="Boat">
+                            <label for="option3">Ελαττωματικό Προϊόν</label><br>
+                            <input type="checkbox" name="option4" value="Boat">
+                            <label for="option4">Λανθασμένο Προϊόν</label><br>
+                            <input type="checkbox" name="option6" value="Boat">
+                            <label for="option6">Άλλο</label><br>
+                        </form>
+                    </section>
+
+
+
+
+
+                </div>
+            </article>
+            <!-- .content -->
+
+
+
+
+
+
+        </div>
+        <!-- #page -->
+
+
+    </div>
+    <!-- #container -->
+
+
+
+    <script>
+        function main() {
+            let data = window.location.href;
+            data = data.split('?')[1];
+            data = decodeURI(data);
+            data = JSON.parse(data);
+            console.log(data);
+            // let b = populate();
+            // if (b > 0) {
+            //     printIt();
+            // }
         }
 
-    })
-
-
-    let order = new WooOrder(client, products, shipping, payment, extra, trueTotal, comment, shop);
-    console.log(order);
-    return order
-
-}
-
-function isWooOrder() {
-    let printButton = document.querySelector('.print-actions');
-    if (printButton != null) {
-        printButton = document.querySelector('a');
-    }
-    let title = document.querySelector('h1.wp-heading-inline');
-    if (title != null && printButton != null && getShop() != null) {
-        if (title.textContent.includes('Παραγγελίας')) {
-            return true
-        } else {
-            return false
+        function printIt() {
+            // window.print();
         }
-    } else {
-        return false
-    }
-}
 
-function stringify(data) {
-    let string = JSON.stringify(data)
-    let temp = 'file:///C:/Users/panag/OneDrive/%CE%88%CE%B3%CE%B3%CF%81%CE%B1%CF%86%CE%B1/Downloads/Warehouse/Thanxtension/card.html?'
-    string = temp + encodeURI(string);
-    return string
-}
+        function populate() {
+            let queryString = window.location.search;
+            let urlParams = new URLSearchParams(queryString);
+            let shop = urlParams.get('shop');
+            console.log(shop);
+            let orderid = urlParams.get('orderid');
+            console.log(orderid);
+            let tv = urlParams.get('tv');
+            console.log(tv);
+            if (orderid != null && shop != null) {
+                document.getElementById('shop').innerText = shop;
+                document.getElementById('orderid').innerText = orderid;
+                document.getElementById('orderid-form').innerText = orderid;
+                return 1
+            } else {
+                return 0
+            }
+        }
 
-var b = isWooOrder();
-if (b) {
-    var printButton = document.querySelector('.print-actions');
-    if (printButton != null) {
-        printButton = printButton.querySelector('a');
-    }
+        function docReady(fn) {
+            if (document.readyState === "complete" || document.readyState === "interactive") {
+                setTimeout(fn, 1);
+            } else {
+                document.addEventListener("DOMContentLoaded", fn);
+            }
+        }
+        docReady(main);
+    </script>
+</body>
 
-
-    printButton.addEventListener('click', function(event) {
-        event.preventDefault();
-        let data = extractOrderData();
-        let url = stringify(data);
-        printButton.href = url;
-        // window.open(url, '_blank');
-    })
-}
+</html>
