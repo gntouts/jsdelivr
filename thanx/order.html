@@ -438,7 +438,7 @@
             document.querySelector('#order_shipping').innerText = data.shipping + ' €';
             document.querySelector('#order_extra').innerText = data.extra + ' €';
             if (data.comment != '') {
-                document.querySelector('#order_comment').innerText = data.comment;
+                document.querySelector('#order_comment').innerHTML = data.comment;
                 document.querySelector('#comment_div').style.display = 'block';
             }
             let qrvalues = 'sh=' + data.shop + "&id=" + data.orderid;
