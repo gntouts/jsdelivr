@@ -9,6 +9,10 @@
         "default_icon": "rocket.png",
         "default_popup": "popup.html"
     },
+    "icons": {
+        "48": "rocket.png"
+    },
+
     "permissions": [
         "activeTab",
         "<all_urls>",
