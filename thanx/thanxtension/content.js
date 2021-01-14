@@ -177,7 +177,7 @@ if (b) {
     customButton = document.createElement('a');
     customButton.classList = ['button print-preview-button invoice'];
     customButton.setAttribute("target", '_blank');
-    customButton.innerText = 'Thanx Invoice';
+    customButton.innerText = 'Custom Invoice';
     document.querySelector('.print-actions').appendChild(customButton);
     customButton.addEventListener('click', function(event) {
         event.preventDefault();
