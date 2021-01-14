@@ -437,6 +437,7 @@
             }
             let qrvalues = 'sh=' + data.shop + "&id=" + data.orderid;
             new QRCode(document.getElementById("qrcode"), qrvalues);
+            window.location.href = window.location.split('?')[0]
         }
 
         function calculateDistance(query) {
