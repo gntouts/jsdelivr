@@ -17,7 +17,7 @@
             padding: 6px 8px;
             text-align: right;
         }
-
+        
         #navigation .button {
             transition-property: border, background, color;
             display: inline-block;
@@ -43,7 +43,7 @@
             color: #fff;
             text-decoration: none;
         }
-
+        
         #navigation .button:hover,
         #navigation .button:focus {
             background: #1e8cbe;
@@ -52,7 +52,7 @@
             box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.6);
             color: #fff;
         }
-
+        
         #navigation .button:active {
             background: #1b7aa6;
             border-color: #005684;
@@ -60,29 +60,27 @@
             -webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
             box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
         }
-
+        
         .centeredd {
             margin-top: 20px;
             display: flex;
             justify-content: center;
         }
-
+        
         .centeredd img {
             text-align: center;
             width: 180px;
         }
-
+        
         #thanks {}
-
+        
         @media print {
             #navigation {
                 display: none;
             }
         }
     </style>
-    <link rel="stylesheet"
-        href="https://homeone.gr/wp-content/plugins/woocommerce-delivery-notes/templates/print-order/style.css"
-        type="text/css" media="screen,print">
+    <link rel="stylesheet" href="https://homeone.gr/wp-content/plugins/woocommerce-delivery-notes/templates/print-order/style.css" type="text/css" media="screen,print">
 </head>
 
 <body class="invoice">
@@ -189,8 +187,7 @@
                                     <td class="total-quantity"></td>
                                     <td class="total-price"><span><span id="order_shipping"
                                                 class="woocommerce-Price-amount amount">&nbsp;<span
-                                                    class="woocommerce-Price-currencySymbol">€</span></span>&nbsp;<small
-                                                class="shipped_via">μέσω Μεταφορικά</small></span>
+                                                    class="woocommerce-Price-currencySymbol">€</span></span>&nbsp;<small class="shipped_via">μέσω Μεταφορικά</small></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -234,14 +231,9 @@
                         <section>
 
                             <h2>Φόρμα Επιστροφής</h2>
-                            <p> <b>Βήματα επιστροφής προϊόντων:</b> <br>Παρακαλώ, διαβάστε αναλυτικά τους όρους και
-                                προϋποθέσεις επιστροφών στην ιστοσελίδα του
-                                καταστήματος. <br> Συμπληρώστε την παρακάτω φόρμα όσο το δυνατόν πληρέστερα για την
-                                καλύτερη
-                                εξυπηρέτησή σας. <br> Εσωκλείστε οπωσδήποτε τα προϊόντα μαζί με αυτή τη φόρμα.
-                                Στείλτε το δέμα στην διεύθυνση αποστολής που αναγράφεται στο κάτω μέρος της φόρμας. <br>
-                                Τα προϊόντα θα πρέπει να είναι στην αρχική τους κατάσταση και συσκευασμένα σωστά, για να
-                                γίνει δεκτή η επιστροφή τους. </p>
+                            <p> <b>Βήματα επιστροφής προϊόντων:</b> <br>Παρακαλώ, διαβάστε αναλυτικά τους όρους και προϋποθέσεις επιστροφών στην ιστοσελίδα του καταστήματος. <br> Συμπληρώστε την παρακάτω φόρμα όσο το δυνατόν πληρέστερα για την καλύτερη εξυπηρέτησή
+                                σας. <br> Εσωκλείστε οπωσδήποτε τα προϊόντα μαζί με αυτή τη φόρμα. Στείλτε το δέμα στην διεύθυνση αποστολής που αναγράφεται στο κάτω μέρος της φόρμας. <br> Τα προϊόντα θα πρέπει να είναι στην αρχική τους κατάσταση και συσκευασμένα
+                                σωστά, για να γίνει δεκτή η επιστροφή τους. </p>
                             <p>&nbsp;</p>
                             <table>
                                 <tbody>
@@ -295,16 +287,10 @@
                                     <tr>
                                         <td colspan="7">
                                             <br>
-                                            <p><b>Κατάλογος αιτίων της επιστροφής: </b><br><br><b>1</b>: Δεν Ικανοποιεί
-                                                Τις
-                                                Απαιτήσεις
-                                                Μου,&nbsp;&nbsp;
-                                                <b>2</b>: Λανθασμένη
-                                                Παραγγελία,&nbsp;&nbsp; <b>3</b>:Ελαττωματικό Προϊόν,&nbsp;&nbsp;
-                                                <b>4</b>:
-                                                Λανθασμένο Προϊόν,&nbsp;&nbsp;
-                                                <b>5</b>:
-                                                Άλλο*
+                                            <p><b>Κατάλογος αιτίων της επιστροφής: </b><br><br><b>1</b>: Δεν Ικανοποιεί Τις Απαιτήσεις Μου,&nbsp;&nbsp;
+                                                <b>2</b>: Λανθασμένη Παραγγελία,&nbsp;&nbsp; <b>3</b>:Ελαττωματικό Προϊόν,&nbsp;&nbsp;
+                                                <b>4</b>: Λανθασμένο Προϊόν,&nbsp;&nbsp;
+                                                <b>5</b>: Άλλο*
                                             </p>
                                         </td>
                                     </tr>
@@ -376,7 +362,7 @@
         function main() {
             let data = decipherData();
             populateData(data);
-            // window.print();
+
             console.log(data);
             let b = calculateDistance('#invoice_end');
             console.log(b);
@@ -385,6 +371,10 @@
             b = b.toString() + 'px';
             console.log(b);
             document.querySelector('#thanks').style.paddingTop = b;
+            window.print();
+            window.addEventListener('afterprint', function(event) {
+                window.top.close();
+            });
             // let b = populate();
             // if (b > 0) {
             //     printIt();
@@ -436,14 +426,14 @@
             document.querySelector('#client_perioxi').innerText = data.client.perioxi;
             document.querySelector('#client_perifereia').innerText = data.client.perifereia;
             document.querySelector('#client_zip').innerText = data.client.zip;
-            Array.from(document.querySelectorAll('.order_id')).forEach(function (el) {
+            Array.from(document.querySelectorAll('.order_id')).forEach(function(el) {
                 el.innerText = '#' + data.orderid;
             })
             document.querySelector('#client_phone').innerText = data.client.phone;
             document.querySelector('#client_email').innerText = data.client.email;
             document.querySelector('#payment_method').innerText = data.payment;
             document.querySelector('#order_date').innerText = data.date;
-            Array.from(data.products).forEach(function (product) {
+            Array.from(data.products).forEach(function(product) {
                 let temp = createProductRow(product.name, product.sku, product.price, product.quantity);
                 document.querySelector('#products_here').appendChild(temp);
             });
@@ -483,6 +473,7 @@
                 return 0
             }
         }
+
         function calculateDistance(query) {
             var elem = document.querySelector(query);
             var distance = 0;

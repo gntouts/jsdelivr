@@ -2,8 +2,8 @@
     "manifest_version": 2,
 
     "name": "Thanxtension Plugin",
-    "description": "This extension will print a thank you page",
-    "version": "1.0",
+    "description": "Custom Invoice and Thank You page for WooCommerce",
+    "version": "1.2",
 
     "browser_action": {
         "default_icon": "rocket.png",
