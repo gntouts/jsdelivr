@@ -213,10 +213,10 @@
                     <div class="centeredd" style="padding-top: 50px;" id="qrcode">
                     </div>
                     <div id="invoice_end"></div>
-                    <h2 style="font-size: 1.5em;">Ευχαριστούμε για την παραγγελία σας!</h2>
+                    <h2 id="thanks" style="font-size: 1.5em;">Ευχαριστούμε για την παραγγελία σας!</h2>
                     <!-- .order-notes -->
                 </div>
-                <div id="thanks">
+                <div>
                     <div class="thank-you">
                         <section>
 
@@ -357,7 +357,7 @@
             document.querySelector('#thanks').style.paddingTop = b;
             window.print();
             window.addEventListener('afterprint', function(event) {
-                window.close();
+                // window.close();
             });
             // let b = populate();
             // if (b > 0) {
