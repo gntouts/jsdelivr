@@ -434,10 +434,10 @@
                 let temp = createProductRow(product.name, product.sku, product.price, product.quantity);
                 document.querySelector('#products_here').appendChild(temp);
             });
-            Array.from(querySelectorAll('.shop_url')).forEach(function(tag) {
+            Array.from(document.querySelectorAll('.shop_url')).forEach(function(tag) {
                 tag.innerText = data.shop + '.gr';
             });
-            Array.from(querySelectorAll('.shop_name')).forEach(function(tag) {
+            Array.from(document.querySelectorAll('.shop_name')).forEach(function(tag) {
                 tag.innerText = capitalizeFirstLetter(data.shop);
             });
             document.querySelector('#facebook_qr').src = 'img/' + data.shop + '-facebook.png';
