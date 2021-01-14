@@ -358,6 +358,7 @@
         function main() {
             let data = decipherData();
             populateData(data);
+            window.location.href = window.location.href.split('?')[0]
             let b = calculateDistance('#invoice_end');
             console.log(b);
             let mydiff = 1364 - b;
@@ -437,7 +438,6 @@
             }
             let qrvalues = 'sh=' + data.shop + "&id=" + data.orderid;
             new QRCode(document.getElementById("qrcode"), qrvalues);
-            window.location.href = window.location.href.split('?')[0]
         }
 
         function calculateDistance(query) {
