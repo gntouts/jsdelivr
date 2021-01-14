@@ -220,7 +220,9 @@
                     </div>
                     <div class="centeredd" style="padding-top: 50px;" id="qrcode">
                     </div>
-                    <div id="invoice_end"></div>
+                    <div id="invoice_end">
+                        <p>&nbsp;</p>
+                    </div>
                     <div id="thanks">
                         <h2 style="font-size: 1.5em;">Ευχαριστούμε για την παραγγελία σας!</h2>
                         <hr>
@@ -356,13 +358,15 @@
         function main() {
             let data = decipherData();
             populateData(data);
+            setTimeout(function() {
+                let b = "0.3 seconds";
+            }, 300);
 
-            console.log(data);
             let b = calculateDistance('#invoice_end');
             console.log(b);
-            let mydiff = 1430 - b;
+            let mydiff = 1400 - b;
 
-            b = 1430 - b;
+            b = 1400 - b;
             b = b.toString() + 'px';
             console.log(b);
             document.querySelector('#thanks').style.marginTop = b;
@@ -370,10 +374,6 @@
             window.addEventListener('afterprint', function(event) {
                 // window.close();
             });
-            // let b = populate();
-            // if (b > 0) {
-            //     printIt();
-            // }
         }
 
         function createProductRow(name, sku, price, quantity) {
@@ -442,31 +442,6 @@
             }
             let qrvalues = 'sh=' + data.shop + "&id=" + data.orderid;
             new QRCode(document.getElementById("qrcode"), qrvalues);
-
-
-        }
-
-        function printIt() {
-            // window.print();
-        }
-
-        function populate() {
-            let queryString = window.location.search;
-            let urlParams = new URLSearchParams(queryString);
-            let shop = urlParams.get('shop');
-            console.log(shop);
-            let orderid = urlParams.get('orderid');
-            console.log(orderid);
-            let tv = urlParams.get('tv');
-            console.log(tv);
-            if (orderid != null && shop != null) {
-                document.getElementById('shop').innerText = shop;
-                document.getElementById('orderid').innerText = orderid;
-                document.getElementById('orderid-form').innerText = orderid;
-                return 1
-            } else {
-                return 0
-            }
         }
 
         function calculateDistance(query) {
