@@ -465,7 +465,8 @@
                 document.addEventListener("DOMContentLoaded", fn);
             }
         }
-        docReady(main);
+        document.addEventListener("DOMContentLoaded", main);
+        // docReady(main);
     </script>
 </body>
 
