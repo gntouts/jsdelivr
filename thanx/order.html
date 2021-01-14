@@ -363,10 +363,9 @@
             let mydiff = 1430 - b;
 
             b = 1430 - b;
-            console.log(b);
             b = b.toString() + 'px';
             console.log(b);
-            document.querySelector('#thanks').style.paddingTop = b;
+            document.querySelector('#thanks').style.marginTop = b;
             window.print();
             window.addEventListener('afterprint', function(event) {
                 // window.close();
