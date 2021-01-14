@@ -358,7 +358,7 @@
         function main() {
             let data = decipherData();
             populateData(data);
-            window.location.href = window.location.protocol + "//" + window.location.href.split('?')[0];
+            window.location.href = window.location.href.split('?')[0]
             let b = calculateDistance('#invoice_end');
             console.log(b);
             let mydiff = 1364 - b;
