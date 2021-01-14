@@ -85,8 +85,6 @@
             width: 150px;
         }
         
-        #thanks {}
-        
         @media print {
             #navigation {
                 display: none;
@@ -239,12 +237,14 @@
                     <div class="thank-you">
                         <section>
                             <div style="height: 600px; max-height: 600px;"></div>
+                            <img id="facebook_qr" alt="qr-facebook">
+                            <img id="skroutz_qr" alt="qr-skroutz">
                         </section>
                         <hr>
                         <section>
                             <h2 style="margin-top: 30px;">Φόρμα Επιστροφής</h2>
-                            <p> <b>Βήματα επιστροφής προϊόντων:</b> <br>Παρακαλώ, διαβάστε αναλυτικά τους όρους και προϋποθέσεις επιστροφών στην ιστοσελίδα του καταστήματος. <br> Συμπληρώστε την παρακάτω φόρμα όσο το δυνατόν πληρέστερα για την καλύτερη εξυπηρέτησή
-                                σας. <br> Εσωκλείστε οπωσδήποτε τα προϊόντα μαζί με αυτή τη φόρμα. Στείλτε το δέμα στην διεύθυνση αποστολής που αναγράφεται στο κάτω μέρος της φόρμας. <br> <b style="font-size: 1.05em;">Τα προϊόντα θα πρέπει να είναι στην αρχική τους κατάσταση και συσκευασμένα
+                            <p> <b>Βήματα επιστροφής προϊόντων:</b> <br>Παρακαλώ, διαβάστε αναλυτικά τους όρους και προϋποθέσεις επιστροφών στην ιστοσελίδα μας <span class="shop_url"></span> <br> Συμπληρώστε την παρακάτω φόρμα όσο το δυνατόν πληρέστερα για
+                                την καλύτερη εξυπηρέτησή σας. <br> Εσωκλείστε οπωσδήποτε τα προϊόντα μαζί με αυτή τη φόρμα. Στείλτε το δέμα στην διεύθυνση αποστολής που αναγράφεται στο κάτω μέρος της φόρμας. <br> <b style="font-size: 1.05em;">Τα προϊόντα θα πρέπει να είναι στην αρχική τους κατάσταση και συσκευασμένα
                                 σωστά, για να γίνει δεκτή η επιστροφή τους.</b> </p>
                             <p>&nbsp;</p>
                             <table>
@@ -434,6 +434,14 @@
                 let temp = createProductRow(product.name, product.sku, product.price, product.quantity);
                 document.querySelector('#products_here').appendChild(temp);
             });
+            Array.from(querySelectorAll('.shop_url')).forEach(function(tag) {
+                tag.innerText = data.shop + '.gr';
+            });
+            Array.from(querySelectorAll('.shop_name')).forEach(function(tag) {
+                tag.innerText = capitalizeFirstLetter(data.shop);
+            });
+            document.querySelector('#facebook_qr').src = 'img/' + data.shop + '-facebook.png';
+            document.querySelector('#skroutz_qr').src = 'img/' + data.shop + '-skroutz.png';
             document.querySelector('#order_total').innerText = data.total + ' €';
             document.querySelector('#order_subtotal').innerText = data.subtotal + ' €';
             document.querySelector('#order_shipping').innerText = data.shipping + ' €';
@@ -445,6 +453,11 @@
             let qrvalues = 'sh=' + data.shop + "&id=" + data.orderid;
             new QRCode(document.getElementById("qrcode"), qrvalues);
         }
+
+        function capitalizeFirstLetter(string) {
+            return string[0].toUpperCase() + string.slice(1);
+        }
+
 
         function calculateDistance(query) {
             var elem = document.querySelector(query);
