@@ -53,6 +53,14 @@
             color: #fff;
         }
         
+        .order-addresses.no-shipping-address {
+            margin-bottom: 42px !important;
+        }
+        
+        .order-info>h2 {
+            margin-bottom: 21px !important;
+        }
+        
         #navigation .button:active {
             background: #1b7aa6;
             border-color: #005684;
@@ -352,6 +360,8 @@
             console.log(data);
             let b = calculateDistance('#invoice_end');
             console.log(b);
+            let mydiff = 1430 - b;
+
             b = 1430 - b;
             console.log(b);
             b = b.toString() + 'px';
