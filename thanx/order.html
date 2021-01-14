@@ -373,7 +373,7 @@
             document.querySelector('#thanks').style.paddingTop = b;
             window.print();
             window.addEventListener('afterprint', function(event) {
-                window.top.close();
+                window.close();
             });
             // let b = populate();
             // if (b > 0) {
