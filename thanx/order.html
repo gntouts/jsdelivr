@@ -356,23 +356,20 @@
         }
 
         function main() {
-            if (first) {
-                first = false;
-                let data = decipherData();
-                populateData(data);
-                window.location.href = window.location.href.split('?')[0]
-                let b = calculateDistance('#invoice_end');
-                console.log(b);
-                let mydiff = 1364 - b;
-                b = 1364 - b;
-                b = b.toString() + 'px';
-                console.log(b);
-                document.querySelector('#thanks').style.marginTop = b;
-                window.print();
-                window.addEventListener('afterprint', function(event) {
-                    // window.close();
-                });
-            }
+            let data = decipherData();
+            populateData(data);
+            let b = calculateDistance('#invoice_end');
+            console.log(b);
+            let mydiff = 1364 - b;
+            b = 1364 - b;
+            b = b.toString() + 'px';
+            console.log(b);
+            document.querySelector('#thanks').style.marginTop = b;
+            window.print();
+            window.addEventListener('afterprint', function(event) {
+                // window.close();
+            });
+
         }
 
         function createProductRow(name, sku, price, quantity) {
@@ -455,11 +452,6 @@
             return distance
         }
 
-        function stupid() {
-            main();
-            first = false;
-        }
-
         function docReady(fn) {
             if (document.readyState === "complete" || document.readyState === "interactive") {
                 setTimeout(fn, 1);
@@ -467,8 +459,7 @@
                 document.addEventListener("DOMContentLoaded", fn);
             }
         }
-        var first = true;
-        docReady(stupid);
+        docReady(main);
     </script>
 </body>
 
