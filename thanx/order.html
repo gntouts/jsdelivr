@@ -359,23 +359,21 @@
             let data = decipherData();
             populateData(data);
             setTimeout(function() {
-                let b = "0.3 seconds";
-                console.log('timeout')
+                let b = calculateDistance('#invoice_end');
+                console.log(b);
+                let mydiff = 1364 - b;
+
+                b = 1364 - b;
+                b = b.toString() + 'px';
+                console.log(b);
+                document.querySelector('#thanks').style.marginTop = b;
+                window.print();
+                window.addEventListener('afterprint', function(event) {
+                    // window.close();
+                });
             }, 300);
-            console.log('main')
 
-            let b = calculateDistance('#invoice_end');
-            console.log(b);
-            let mydiff = 1364 - b;
 
-            b = 1364 - b;
-            b = b.toString() + 'px';
-            console.log(b);
-            document.querySelector('#thanks').style.marginTop = b;
-            window.print();
-            window.addEventListener('afterprint', function(event) {
-                // window.close();
-            });
         }
 
         function createProductRow(name, sku, price, quantity) {
