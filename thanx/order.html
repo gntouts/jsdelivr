@@ -357,6 +357,7 @@
 
         function main() {
             if (first) {
+                first = false;
                 let data = decipherData();
                 populateData(data);
                 window.location.href = window.location.href.split('?')[0]
@@ -454,8 +455,12 @@
             return distance
         }
 
-        function docReady(fn) {
+        function stupid() {
+            main();
             first = false;
+        }
+
+        function docReady(fn) {
             if (document.readyState === "complete" || document.readyState === "interactive") {
                 setTimeout(fn, 1);
             } else {
@@ -463,7 +468,7 @@
             }
         }
         var first = true;
-        docReady(main);
+        docReady(stupid);
     </script>
 </body>
 
