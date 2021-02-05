@@ -1,3 +1,5 @@
+// CUSTOM INVOICE STUFF
+
 class WooProduct {
     constructor(name, sku, price, quantity) {
         this.name = name;
@@ -168,12 +170,7 @@ function stringify(data) {
     return string
 }
 
-var b = isWooOrder();
-if (b) {
-    var printButton = document.querySelector('.print-actions');
-    if (printButton != null) {
-        printButton = printButton.querySelector('a');
-    }
+function customInvoiceProcess() {
     customButton = document.createElement('a');
     customButton.classList = ['button print-preview-button invoice'];
     customButton.setAttribute("target", '_blank');
@@ -182,8 +179,53 @@ if (b) {
     customButton.addEventListener('click', function(event) {
         event.preventDefault();
         let data = extractOrderData();
+        console.log(data);
         let url = stringify(data);
         customButton.setAttribute("href", url);
         window.open(url, '_blank');
     })
+}
+
+// SMS SEND STUFF
+
+function postOrderUpdate(orderId, status, shop) {
+    var xhttp = new XMLHttpRequest();
+    let data = '?orderid=' + orderId + '&status=' + status + '&shop=' + shop;
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            resetButtons();
+        }
+    };
+    xhttp.open("GET", 'https://kirosgranazis.herokuapp.com/woo/order-update' + data, true);
+    // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(data);
+}
+
+function smsButtonProccess() {
+    smsButton = document.createElement('a');
+    smsButton.classList = ['button print-preview-button invoice'];
+    smsButton.setAttribute("target", '_blank');
+    smsButton.innerText = 'Send SMS';
+    document.querySelector('.print-actions').appendChild(smsButton);
+    smsButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        let data = extractOrderData();
+        console.log(data);
+        postOrderUpdate(data.orderid, 'sent', data.shop);
+        setTimeout(function() {
+            location.reload();
+        }, 1000);
+
+    })
+}
+
+// MAIN 
+var b = isWooOrder();
+if (b) {
+    var printButton = document.querySelector('.print-actions');
+    if (printButton != null) {
+        printButton = printButton.querySelector('a');
+    }
+    customInvoiceProcess();
+    smsButtonProccess();
 }
