@@ -9,6 +9,12 @@
         "default_icon": "rocket.png",
         "default_popup": "popup.html"
     },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "custom-sms@esales.com"
+        }
+    },
+
     "permissions": [
         "activeTab",
         "<all_urls>",
